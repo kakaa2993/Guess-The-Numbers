@@ -1,10 +1,8 @@
 #!/usr/bin/python3
-
 ''' a small game for guessing the numbers between 1 to 100 '''
 import random
 import os
 from art import logo
-
 
 # print the first display:
 os.system('clear')
