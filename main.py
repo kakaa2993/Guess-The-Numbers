@@ -12,10 +12,9 @@ print(logo)
 
 answer = random.randint(1,100)
 
-print("Welcome Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.")
-print(answer)
+print("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.")
 num_of_attempts = 10
-difficulty = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
+difficulty = input("Choose a difficulty. Type 'easy' or 'hard'(hard = 5 attempts / easy = 10 atempts): ").lower()
 if difficulty == "hard":
     num_of_attempts = 5
 
@@ -29,12 +28,13 @@ def guessing_the_number(attempts):
             print(f"You got it! The answer was {answer}.😃 ")
             attempts = 0
         elif guess > answer:
-            print("Too high.\nGuess agian.")
+            print("Too high.👆\nGuess agian.")
         elif guess < answer:
-            print("Too low.\nGuess agian.")
+            print("Too low.👇\nGuess agian.")
         attempts -= 1
     if attempts == 0:
         print("You've run out of guesses, you lose.🤪")
+        print(f"the right number was {answer}")
 
 guessing_the_number(attempts=num_of_attempts)
 
