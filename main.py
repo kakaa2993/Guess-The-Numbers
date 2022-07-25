@@ -10,7 +10,6 @@ from art import logo
 os.system('clear')
 print(logo)
 
-
 answer = random.randint(1,100)
 
 print("Welcome Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.")
@@ -21,6 +20,7 @@ if difficulty == "hard":
     num_of_attempts = 5
 
 def guessing_the_number(attempts):
+    '''gues and print the result of the guessing numbers'''
     global answer
     while attempts > 0:
         print(f'You have {attempts} attempts remaining to guess the number. ')
