@@ -5,13 +5,15 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key = ""
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SQLALCHEMY_TRACK_NOTIFICATION"] = False
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+# app.config["SQLALCHEMY_TRACK_NOTIFICATION"] = False
 Bootstrap(app=app)
-db = SQLAlchemy(app=app)
+# db = SQLAlchemy(app=app)
+#
+# class Movies(db.Model):
+#     pass
 
-class Movies(db.Model):
-    pass
+
 @app.route("/")
 def home():
     return render_template("index.html")
