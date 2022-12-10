@@ -23,7 +23,8 @@ class Movie(db.Model):
     img_url = db.Column(db.String(250), nullable=False, unique=True)
 
     def __repr__(self):
-        return f"{self.id} {self.title} {self.year}"
+        return f"{self.id},{self.title},{self.year},{self.description}," \
+               f"{self.rating},{self.ranking},{self.review},{self.img_url}"
 
 
 db.create_all()
@@ -40,10 +41,14 @@ db.create_all()
 # db.session.add(new_movie)
 # db.session.commit()
 
+
+# create the home page that display all the movies for the database
 @app.route("/")
 def home():
-    return render_template("index.html")
+    # read and return the data from the database
+    all_movies = db.session.query(Movie).all()
+    return render_template("index.html", movies=all_movies)
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="localhost", port=5000)
-
