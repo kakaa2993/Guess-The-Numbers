@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 from flask import Flask, render_template, redirect, request
+from flask_wtf import FlaskForm
+from wtforms import StringField, FloatField, SubmitField
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
@@ -28,9 +30,13 @@ class Movie(db.Model):
     def __repr__(self):
         return f"{self.id},{self.title},{self.year},{self.description}," \
                f"{self.rating},{self.ranking},{self.review},{self.img_url}"
-
-
 db.create_all()
+
+
+class Form(FlaskForm):
+    rating = FloatField(label="Your Rating Out of 10 e.g 7.3",)
+    review = StringField(label="Your Review")
+
 
 # new_movie = Movie(
 #     title="Phone Booth",
@@ -51,6 +57,14 @@ def home():
     # read and return the data from the database
     all_movies = db.session.query(Movie).all()
     return render_template("index.html", movies=all_movies)
+
+
+@app.route("/edit")
+def edit_rating():
+    movie_id = request.args.get('id')
+    movie_data = Movie.query.get(movie_id)
+    print(movie_data)
+    return render_template('edit.html', movie_id=movie_id, movie=movie_data)
 
 
 if __name__ == "__main__":
