@@ -5,13 +5,16 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"
+Bootstrap(app=app)
+
+# Create database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_NOTIFICATION"] = False
-Bootstrap(app=app)
 db = SQLAlchemy(app=app)
 app.app_context().push()
 
 
+# Create table
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     title = db.Column(db.String(250), nullable=False, unique=True)
