@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, SubmitField
+from wtforms.validators import DataRequired, NumberRange
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
@@ -33,9 +34,12 @@ class Movie(db.Model):
 db.create_all()
 
 
-class Form(FlaskForm):
-    rating = FloatField(label="Your Rating Out of 10 e.g 7.3",)
-    review = StringField(label="Your Review")
+class RateMovieForm(FlaskForm):
+    rating = FloatField(label="Your Rating Out of 10 e.g 7.3",
+                        validators=[DataRequired(), NumberRange(min=0, max=10, message="Out Of Range")])
+    review = StringField(label="Your Review",
+                         validators=[DataRequired()])
+    submit = SubmitField(label="Done",)
 
 
 # new_movie = Movie(
@@ -51,6 +55,8 @@ class Form(FlaskForm):
 # db.session.commit()
 
 
+
+
 # create the home page that display all the movies for the database
 @app.route("/")
 def home():
@@ -59,12 +65,25 @@ def home():
     return render_template("index.html", movies=all_movies)
 
 
-@app.route("/edit")
+@app.route("/edit", methods=["POST", "GET"])
 def edit_rating():
+    form = RateMovieForm()
     movie_id = request.args.get('id')
     movie_data = Movie.query.get(movie_id)
-    print(movie_data)
-    return render_template('edit.html', movie_id=movie_id, movie=movie_data)
+    if form.validate_on_submit():
+        # change the movie rating and review from the database
+        new_rating = form.rating.data
+        new_review = form.review.data
+        movie_data.rating = new_rating
+        movie_data.review = new_review
+        db.session.commit()
+        return redirect(url_for("home"))
+    else:
+        # write inside the labels 'the old review and reading'
+        form.rating.render_kw = {"placeholder": f"{movie_data.rating}"}
+        form.review.render_kw = {"placeholder": f"{movie_data.review}"}
+        # return render_template('edit.html', form=form)
+        return render_template('edit.html', movie_id=movie_id, movie=movie_data, form=form)
 
 
 if __name__ == "__main__":
