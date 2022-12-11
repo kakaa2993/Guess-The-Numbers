@@ -16,10 +16,16 @@
 {% block content %}
     <div class="container">
       <h1 class="heading">Add A Movie</h1>
-      <p> </p>
-        <div class="card">
-            {{ wtf.quick_form(form, novalidate=True) }}
-        </div>
+        {% if not results: %}
+            <div class="card">
+                {{ wtf.quick_form(form, novalidate=True) }}
+            </div>
+        {% else %}
+            {% for movie in results %}
+                <a href="#" class="description">{{ movie[1] }} - {{ movie[2] }}</a>
+                <br>
+            {% endfor %}
+        {% endif %}
     </div>
 
 {% endblock%}

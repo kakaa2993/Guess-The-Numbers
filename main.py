@@ -7,6 +7,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 import requests
 
+MOVIES_API_KEY = "a0d35a0a8d84bd65eb09706947c74399"
+MOVIES_SEARCH_API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
+POSTER_API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
+
 app = Flask(__name__)
 app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"
 Bootstrap(app=app)
@@ -62,6 +66,20 @@ class AddingMovieForm(FlaskForm):
 # db.session.add(new_movie)
 # db.session.commit()
 
+
+# Search for the movie in the themoviedb api
+def search_for_movie(user_target):
+    parameters = {
+        "api_key": MOVIES_API_KEY,
+        "include_adult": "false",
+        "query": user_target,
+    }
+    response = requests.get(url=MOVIES_SEARCH_API_ENDPOINT, params=parameters).json()["results"]
+    # print(response)
+    return response
+
+
+
 # create the home page that display all the movies for the database
 @app.route("/")
 def home():
@@ -91,14 +109,6 @@ def edit_rating():
         return render_template('edit.html', movie_id=movie_id, movie=movie_data, form=form)
 
 
-# Add a movie page
-@app.route("/add")
-def add_movies():
-    form = AddingMovieForm()
-    if
-    return render_template("add.html", form=form)
-
-
 # delete the movie from the database
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
@@ -107,6 +117,22 @@ def delete():
     db.session.delete(movie_data)
     db.session.commit()
     return redirect(url_for("home"))
+
+
+# Add a movie page
+@app.route("/add", methods=["POST", "GET"])
+def add_movies():
+    form = AddingMovieForm()
+    data_needed = []
+    if form.validate_on_submit():
+        print(form.movie_title.data)
+        user_typed = form.movie_title.data
+        result = search_for_movie(user_typed)
+        for movie in result:
+            data = [movie["id"], movie["title"], movie["release_date"]]
+            data_needed.append(data)
+        print(data_needed)
+    return render_template("add.html", form=form, results=data_needed)
 
 
 if __name__ == "__main__":
