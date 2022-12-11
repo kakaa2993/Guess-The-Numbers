@@ -16,9 +16,19 @@
 {% block content %}
     <div class="container">
       <h1 class="heading">Add A Movie</h1>
+
+        {% if not results: %}
             <div class="card">
-                {{ wtf.quick_form(form, novalidate=True) }}
+                <p>No Result found</p>
             </div>
+        {% else %}
+            {% for movie in results %}
+            <p>
+                <a href="#" class="description">{{ movie.title }} - {{ movie.release_date }}</a>
+            </p>
+            {% endfor %}
+        {% endif %}
+
     </div>
 
 {% endblock%}

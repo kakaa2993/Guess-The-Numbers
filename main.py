@@ -57,7 +57,9 @@ class AddingMovieForm(FlaskForm):
 # new_movie = Movie(
 #     title="Phone Booth",
 #     year=2002,
-#     description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
+#     description="Publicist Stuart Shepard finds himself trapped in a phone booth,
+#     pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help,
+#     Stuart's negotiation with the caller leads to a jaw-dropping climax.",
 #     rating=7.3,
 #     ranking=10,
 #     review="My favourite character was the caller.",
@@ -75,7 +77,6 @@ def search_for_movie(user_target):
         "query": user_target,
     }
     response = requests.get(url=MOVIES_SEARCH_API_ENDPOINT, params=parameters).json()["results"]
-    # print(response)
     return response
 
 
@@ -123,16 +124,11 @@ def delete():
 @app.route("/add", methods=["POST", "GET"])
 def add_movies():
     form = AddingMovieForm()
-    data_needed = []
     if form.validate_on_submit():
-        print(form.movie_title.data)
         user_typed = form.movie_title.data
         result = search_for_movie(user_typed)
-        for movie in result:
-            data = [movie["id"], movie["title"], movie["release_date"]]
-            data_needed.append(data)
-        print(data_needed)
-    return render_template("add.html", form=form, results=data_needed)
+        return render_template("select.html", results=result)
+    return render_template("add.html", form=form)
 
 
 if __name__ == "__main__":
