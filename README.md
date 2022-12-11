@@ -1,4 +1,6 @@
-# Top 10 Movies( for me 😃)
+<h1 align="center"> Top 10 Movies </h1>
+
+## About The Project:
 a website build with flask and bootstrap, and in the database we used SQLite.
 
 ## The Technology That Used:
@@ -6,3 +8,5 @@ a website build with flask and bootstrap, and in the database we used SQLite.
 - Bootstrap 5 for the UI.  
 - SQLite for the Database.  
 - Flask for the Backend.  
+- Jinja2 for the Templating.
+

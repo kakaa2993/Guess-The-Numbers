@@ -5,6 +5,7 @@ from wtforms import StringField, FloatField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+import requests
 
 app = Flask(__name__)
 app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"
@@ -34,12 +35,19 @@ class Movie(db.Model):
 db.create_all()
 
 
+# create the forms for edit rating
 class RateMovieForm(FlaskForm):
     rating = FloatField(label="Your Rating Out of 10 e.g 7.3",
                         validators=[DataRequired(), NumberRange(min=0, max=10, message="Out Of Range")])
     review = StringField(label="Your Review",
                          validators=[DataRequired()])
-    submit = SubmitField(label="Done",)
+    submit = SubmitField(label="Done")
+
+
+# Create the forms for add movies
+class AddingMovieForm(FlaskForm):
+    movie_title = StringField(label="Movie Title", validators=[DataRequired()])
+    submit = SubmitField(label="Add Movie")
 
 
 # new_movie = Movie(
@@ -53,9 +61,6 @@ class RateMovieForm(FlaskForm):
 # )
 # db.session.add(new_movie)
 # db.session.commit()
-
-
-
 
 # create the home page that display all the movies for the database
 @app.route("/")
@@ -84,6 +89,14 @@ def edit_rating():
         form.review.render_kw = {"placeholder": f"{movie_data.review}"}
         # return render_template('edit.html', form=form)
         return render_template('edit.html', movie_id=movie_id, movie=movie_data, form=form)
+
+
+# Add a movie page
+@app.route("/add")
+def add_movies():
+    form = AddingMovieForm()
+    if
+    return render_template("add.html", form=form)
 
 
 # delete the movie from the database

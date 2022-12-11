@@ -15,15 +15,8 @@
 <div class="container">
   <h1 class="heading">My Top 10 Movies</h1>
   <p class="description">These are my all time favourite movies.</p>
+
   {% for movie in movies %}
-<!--    <p>{{ movie.id }}</p>-->
-<!--    <p>{{ movie.title }}</p>-->
-<!--    <p>{{ movie.year }}</p>-->
-<!--    <p>{{ movie.description }}</p>-->
-<!--    <p>{{ movie.rating }}</p>-->
-<!--    <p>{{ movie.ranking }}</p>-->
-<!--    <p>{{ movie.review }}</p>-->
-<!--    <p>{{ movie.img_url }}</p>-->
   <div class="card" >
     <div class="front" style="background-image: url('{{ movie.img_url }}');">
         <p class="large">{{ movie.ranking }}</p>
@@ -50,7 +43,7 @@
 
 </div>
 <div class="container text-center add">
-<a href="#" class="button">Add Movie</a>
+<a href="{{ url_for('add_movies') }}" class="button">Add Movie</a>
 </div>
 
 {% endblock %}
