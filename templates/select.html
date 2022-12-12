@@ -24,7 +24,7 @@
         {% else %}
             {% for movie in results %}
             <p>
-                <a href="#" class="description">{{ movie.title }} - {{ movie.release_date }}</a>
+                <a href="{{ url_for('search_movie_detail_and_add_to_db',id=movie.id) }}" class="description">{{ movie.title }} - {{ movie.release_date }}</a>
             </p>
             {% endfor %}
         {% endif %}

@@ -10,6 +10,8 @@ import requests
 MOVIES_API_KEY = "a0d35a0a8d84bd65eb09706947c74399"
 MOVIES_SEARCH_API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
 POSTER_API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
+MOVIE_DETAILS_API = "https://api.themoviedb.org/3/movie/"
+
 
 app = Flask(__name__)
 app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"
@@ -24,18 +26,20 @@ app.app_context().push()
 
 # Create table
 class Movie(db.Model):
-    id = db.Column(db.Integer, primary_key=True, unique=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(250), nullable=False, unique=True)
     year = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String, nullable=False)
-    rating = db.Column(db.Float(), nullable=False)
-    ranking = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.String(250), nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    ranking = db.Column(db.Integer, nullable=True)
+    review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False, unique=True)
 
     def __repr__(self):
         return f"{self.id},{self.title},{self.year},{self.description}," \
                f"{self.rating},{self.ranking},{self.review},{self.img_url}"
+
+
 db.create_all()
 
 
@@ -130,9 +134,20 @@ def add_movies():
 
 
 # add the movie selected to the database
-@app.route("/to-the-database")
-def search_movie_detail():
-    request.args.get("")
+@app.route("/to-the-database", methods=["POST","GET"])
+def search_movie_detail_and_add_to_db():
+    movie_id = request.args.get("id")
+    print(movie_id)
+    response = requests.get(url=f"{MOVIE_DETAILS_API}{movie_id}", params={"api_key": MOVIES_API_KEY}).json()
+    new_movie = Movie(
+        title=response["title"],
+        year=response["release_date"],
+        description=response["overview"],
+        img_url=f"https://image.tmdb.org/t/p/w500{response['poster_path']}",
+    )
+    db.session.add(new_movie)
+    db.session.commit()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
