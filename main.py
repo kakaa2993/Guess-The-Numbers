@@ -80,7 +80,6 @@ def search_for_movie(user_target):
     return response
 
 
-
 # create the home page that display all the movies for the database
 @app.route("/")
 def home():
@@ -106,7 +105,6 @@ def edit_rating():
         # write inside the labels 'the old review and reading'
         form.rating.render_kw = {"placeholder": f"{movie_data.rating}"}
         form.review.render_kw = {"placeholder": f"{movie_data.review}"}
-        # return render_template('edit.html', form=form)
         return render_template('edit.html', movie_id=movie_id, movie=movie_data, form=form)
 
 
@@ -129,6 +127,12 @@ def add_movies():
         result = search_for_movie(user_typed)
         return render_template("select.html", results=result)
     return render_template("add.html", form=form)
+
+
+# add the movie selected to the database
+@app.route("/to-the-database")
+def search_movie_detail():
+    request.args.get("")
 
 
 if __name__ == "__main__":
