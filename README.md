@@ -1,5 +1,8 @@
 <h1 align="center"> Top 10 Movies </h1>
-<img align="center" width="100%" src="preview.gif">
+
+https://user-images.githubusercontent.com/43291919/207055920-edb10624-ca7a-40bc-b961-0beccfad8170.mp4
+
+
 
 ## About The Project:
 a simple web application that allows the user to create his top 10 movies for all the time, and he can always update his list and keep track of which movies to recommend to people.
