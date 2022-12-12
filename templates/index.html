@@ -19,11 +19,11 @@
   {% for movie in movies %}
   <div class="card" >
     <div class="front" style="background-image: url('{{ movie.img_url }}');">
-        <p class="large">{{ movie.ranking }}</p>
+        <p class="large">{{ loop.revindex }}</p>
     </div>
     <div class="back">
       <div>
-    <div class="title">{{ movie.title }}<span class="release_date">{{ movie.year }}</span></div>
+    <div class="title">{{ movie.title }}<span class="release_date"> ({{ movie.year }})</span></div>
         <div class="rating">
             <label>{{ movie.rating }}</label>
           <i class="fas fa-star star"></i>

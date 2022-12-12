@@ -33,7 +33,7 @@ class Movie(db.Model):
     rating = db.Column(db.Float, nullable=True)
     ranking = db.Column(db.Integer, nullable=True)
     review = db.Column(db.String(250), nullable=True)
-    img_url = db.Column(db.String(250), nullable=False, unique=True)
+    img_url = db.Column(db.String(250), nullable=False)
 
     def __repr__(self):
         return f"{self.id},{self.title},{self.year},{self.description}," \
@@ -88,7 +88,8 @@ def search_for_movie(user_target):
 @app.route("/")
 def home():
     # read and return the data from the database
-    all_movies = db.session.query(Movie).all()
+    all_movies = Movie.query.order_by(Movie.rating).all()
+    print(all_movies)
     return render_template("index.html", movies=all_movies)
 
 
@@ -137,17 +138,19 @@ def add_movies():
 @app.route("/to-the-database", methods=["POST","GET"])
 def search_movie_detail_and_add_to_db():
     movie_id = request.args.get("id")
-    print(movie_id)
     response = requests.get(url=f"{MOVIE_DETAILS_API}{movie_id}", params={"api_key": MOVIES_API_KEY}).json()
     new_movie = Movie(
         title=response["title"],
-        year=response["release_date"],
+        year=response["release_date"].split('-')[0],
         description=response["overview"],
         img_url=f"https://image.tmdb.org/t/p/w500{response['poster_path']}",
+        rating=response["vote_average"],
+        review=" ",
     )
     db.session.add(new_movie)
     db.session.commit()
-    return redirect(url_for("home"))
+    movie_target = Movie.query.filter_by(title=response["title"]).first()
+    return redirect(url_for("edit_rating", id=movie_target.id))
 
 
 if __name__ == "__main__":
