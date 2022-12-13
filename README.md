@@ -3,6 +3,13 @@
 https://user-images.githubusercontent.com/43291919/207055920-edb10624-ca7a-40bc-b961-0beccfad8170.mp4
 
 
+![Languages](https://img.shields.io/github/languages/count/diegovinci/dsmovie?color=%234d41c0)
+![Top Language](https://img.shields.io/github/languages/top/diegovinci/dsmovie?color=%234d41c0)
+![Repository Size](https://img.shields.io/github/repo-size/diegovinci/dsmovie?color=%234d41c0)
+![Made By](https://img.shields.io/badge/made%20by-diegovinci-%234d41c0)
+![License](https://img.shields.io/badge/license-MIT-%234d41c0)
+
+
 
 ## About The Project:
 a simple web application that allows the user to create his top 10 movies for all the time, and he can always update his list and keep track of which movies to recommend to people.
@@ -14,3 +21,7 @@ a simple web application that allows the user to create his top 10 movies for al
 - <a href="https://flask.palletsprojects.com/">Flask</a> for the Backend.  
 - <a href="https://palletsprojects.com/p/jinja/">Jinja2</a> for the Templating.
 
+### License 
+This project is under the MIT license. see the [LICENSE]() file for more details.
+
+Made by Zakarya Belamiri :wave: [Get in touch!](https://)
