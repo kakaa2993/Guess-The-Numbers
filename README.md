@@ -1,4 +1,4 @@
-<h1 align="center"> Top 10 Movies </h1>
+<h1 align="center"> Top 10 Movies 🎬 </h1>
 
 https://user-images.githubusercontent.com/43291919/207055920-edb10624-ca7a-40bc-b961-0beccfad8170.mp4
 
