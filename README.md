@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/43291919/207055920-edb10624-ca7a-40bc-
 
 
 ## About The Project:
-It's a simple web application that allows the user to create his top 10 movies for all the time, and he can always update his list and keep track of which movies to recommend to people.
+It's a simple web application that allows the user to create his top 10 movies at all times, and he can constantly update his list and keep track of which movies to recommend to people.
 
 ## The technologies Used:
 - <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML5</a> & <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS3</a> for the structure and the styling.  
