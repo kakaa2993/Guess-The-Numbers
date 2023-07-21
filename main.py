@@ -7,14 +7,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 import requests
 
-MOVIES_API_KEY = "a0d35a0a8d84bd65eb09706947c74399"
+MOVIES_API_KEY = "a0d35a0a8d84bd65eb09706947c74399"  # put yours here
 MOVIES_SEARCH_API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
 POSTER_API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DETAILS_API = "https://api.themoviedb.org/3/movie/"
 
 
 app = Flask(__name__)
-app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"
+app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf" # you need to change this with yours
 Bootstrap(app=app)
 
 # Create database
@@ -58,21 +58,6 @@ class AddingMovieForm(FlaskForm):
     submit = SubmitField(label="Add Movie")
 
 
-# new_movie = Movie(
-#     title="Phone Booth",
-#     year=2002,
-#     description="Publicist Stuart Shepard finds himself trapped in a phone booth,
-#     pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help,
-#     Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-#     rating=7.3,
-#     ranking=10,
-#     review="My favourite character was the caller.",
-#     img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
-# )
-# db.session.add(new_movie)
-# db.session.commit()
-
-
 # Search for the movie in the themoviedb api
 def search_for_movie(user_target):
     parameters = {
@@ -93,6 +78,7 @@ def home():
     return render_template("index.html", movies=all_movies)
 
 
+# edit the movie rating and/or review from the database
 @app.route("/edit", methods=["POST", "GET"])
 def edit_rating():
     form = RateMovieForm()
