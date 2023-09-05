@@ -14,14 +14,14 @@ MOVIES_SEARCH_API_ENDPOINT: str = "https://api.themoviedb.org/3/search/movie"
 POSTER_API_ENDPOINT: str = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DETAILS_API: str = "https://api.themoviedb.org/3/movie/"
 
-apps: Flask = Flask(__name__)
+app: Flask = Flask(__name__)
 app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"  # you need to change this with yours
 Bootstrap(app=app)
 
 # Create database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_NOTIFICATION"] = False
-db = SQLAlchemy(app=app)
+db: SQLAlchemy = SQLAlchemy(app=app)
 app.app_context().push()
 
 
@@ -46,22 +46,22 @@ db.create_all()
 
 # Create the forms for edit rating
 class RateMovieForm(FlaskForm):
-    rating: Any = FloatField(label="Your Rating Out of 10 e.g 7.3",
+    rating = FloatField(label="Your Rating Out of 10 e.g 7.3",
                              validators=[DataRequired(), NumberRange(min=0, max=10, message="Out Of Range")])
-    review: Any = StringField(label="Your Review",
+    review = StringField(label="Your Review",
                               validators=[DataRequired()])
-    submit: Any = SubmitField(label="Done")
+    submit = SubmitField(label="Done")
 
 
 # Create the forms for adding movies
 class AddingMovieForm(FlaskForm):
-    movie_title: Any = StringField(label="Movie Title", validators=[DataRequired()])
-    submit: Any = SubmitField(label="Add Movie")
+    movie_title = StringField(label="Movie Title", validators=[DataRequired()])
+    submit = SubmitField(label="Add Movie")
 
 
 # Search for the movie in the movie API
 def search_for_movie(user_target: str) -> Response:
-    parameters = {
+    parameters: Dict = {
         "api_key": MOVIES_API_KEY,
         "include_adult": "false",
         "query": user_target,
@@ -72,20 +72,21 @@ def search_for_movie(user_target: str) -> Response:
 
 # Create the home page that displays all the movies for the database
 @app.route("/")
-def home():
+def home() -> str:
     # Read and return the data from the database
     all_movies = Movie.query.order_by(Movie.rating).all()
-    print(all_movies)
+    # print(all_movies)
     return render_template("index.html", movies=all_movies)
 
 
 # edit the movie rating and/or review from the database
 @app.route("/edit", methods=["POST", "GET"])
-def edit_rating():
+def edit_rating() -> Response | str:
     form: RateMovieForm = RateMovieForm()
     movie_id: str | None = request.args.get('id')
     movie_data = Movie.query.get(movie_id)
     if form.validate_on_submit():
+
         # change the movie rating and review from the database
         new_rating = form.rating.data
         new_review = form.review.data
@@ -102,7 +103,7 @@ def edit_rating():
 
 # delete the movie from the database
 @app.route("/delete", methods=["GET", "POST"])
-def delete():
+def delete() -> Response:
     movie_id: str | None = request.args.get("id")
     movie_data = Movie.query.get(movie_id)
     db.session.delete(movie_data)
@@ -112,7 +113,7 @@ def delete():
 
 # Add a movie page
 @app.route("/add", methods=["POST", "GET"])
-def add_movies():
+def add_movies() -> str:
     form: AddingMovieForm = AddingMovieForm()
     if form.validate_on_submit():
         user_typed: str = form.movie_title.data
@@ -123,7 +124,7 @@ def add_movies():
 
 # add the movie selected to the database
 @app.route("/to-the-database", methods=["POST", "GET"])
-def search_movie_detail_and_add_to_db():
+def search_movie_detail_and_add_to_db() -> Response:
     movie_id: str | None = request.args.get("id")
     response = requests.get(url=f"{MOVIE_DETAILS_API}{movie_id}", params={"api_key": MOVIES_API_KEY}).json()
     new_movie = Movie(
@@ -141,4 +142,4 @@ def search_movie_detail_and_add_to_db():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=5000)    # <-- change here 
+    app.run(debug=True, host="localhost", port=5000)    # <-- change here
