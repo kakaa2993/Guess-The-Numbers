@@ -1,4 +1,3 @@
-# !/usr/bin/python3
 from flask import Flask, render_template, redirect, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, SubmitField
@@ -9,7 +8,7 @@ import requests
 from requests import Response
 from typing import List, Tuple, Dict, Any
 
-MOVIES_API_KEY: str = "a0d35a0a8d84bd65eb09706947c74399"  # put yours here
+MOVIES_API_KEY: str = "themoviedb.org api_key"  # <- put yours here
 MOVIES_SEARCH_API_ENDPOINT: str = "https://api.themoviedb.org/3/search/movie"
 POSTER_API_ENDPOINT: str = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DETAILS_API: str = "https://api.themoviedb.org/3/movie/"
