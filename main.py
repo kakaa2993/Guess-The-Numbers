@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, Response
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
@@ -125,7 +125,7 @@ def add_movies() -> str:
 @app.route("/to-the-database", methods=["POST", "GET"])
 def search_movie_detail_and_add_to_db() -> Response:
     movie_id: str | None = request.args.get("id")
-    response = requests.get(url=f"{MOVIE_DETAILS_API}{movie_id}", params={"api_key": MOVIES_API_KEY}).json()
+    response: Response = requests.get(url=f"{MOVIE_DETAILS_API}{movie_id}", params={"api_key": MOVIES_API_KEY}).json()
     new_movie = Movie(
         title=response["title"],
         year=response["release_date"].split('-')[0],
