@@ -8,11 +8,13 @@ import requests
 from requests import Response
 from typing import List, Tuple, Dict, Any
 
+# APIs
 MOVIES_API_KEY: str = "themoviedb.org api_key"  # <- put yours here
 MOVIES_SEARCH_API_ENDPOINT: str = "https://api.themoviedb.org/3/search/movie"
 POSTER_API_ENDPOINT: str = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DETAILS_API: str = "https://api.themoviedb.org/3/movie/"
 
+# config
 app: Flask = Flask(__name__)
 app.secret_key = "l5df4sdf8dfs4df4sdf4dfs5df8sdf2sdf"  # you need to change this with yours
 Bootstrap(app=app)
