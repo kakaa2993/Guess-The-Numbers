@@ -143,4 +143,5 @@ def search_movie_detail_and_add_to_db() -> Response:
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=5000)    # <-- change here
+    # Only for debugging while developing
+    app.run(debug=True, host="localhost", port=5000)
