@@ -21,6 +21,28 @@ It's a simple web application that allows the user to create his top 10 movies a
 - <a href="https://flask.palletsprojects.com/">Flask</a> for the Backend.  
 - <a href="https://palletsprojects.com/p/jinja/">Jinja2</a> for the Templating.
 
+
+## Run the website:
+Regular web servers can't run Python applications, so a special server type was used(Web Server Gateway Interface 'WSGI') to run Python applications.
+The most popular: <a href="http://www.gunicorn.org/">gunicorn</a> ( run on Linux only!!!)
+
+
+**To run the website:**
+
+* 1 - install the requirements by
+```
+pip install requirements.txt
+```
+* 2 - run the webiste
+```
+gunicorn main:app
+```
+
+
+> - **Note: You must be in the same directory of the `main.py` file to run the previous command.**
+
+
+
 ### License:
 This project is under the MIT license. see the [LICENSE](https://github.com/kakaa2993/Top-10-Movies/blob/main/LICENCE) file for more details.
 
